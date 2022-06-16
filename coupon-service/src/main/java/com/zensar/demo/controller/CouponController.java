@@ -34,8 +34,8 @@ public class CouponController {
 	}
 
 	@GetMapping("/coupon")
-	public List<CouponDto> getAllCoupon() {
-		return couponServices.getAllCoupon();
+	public ResponseEntity<List<CouponDto>> getAllCoupon() {
+		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(), HttpStatus.OK);
 
 	}
 
