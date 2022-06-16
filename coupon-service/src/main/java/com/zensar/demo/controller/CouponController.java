@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.demo.dto.CouponDto;
-import com.zensar.demo.entity.Coupon;
 import com.zensar.demo.service.CouponServices;
 
 @RestController
@@ -57,4 +56,16 @@ public class CouponController {
 		return new ResponseEntity<String>("Coupon Deleted Successfully", HttpStatus.OK);
 
 	}
+
+	@GetMapping("/coupon/percentDiscount/{percentDiscount}")
+	public ResponseEntity<List<CouponDto>> findByPercentDiscount(@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.findByPercentDiscount(percentDiscount), HttpStatus.OK);
+
+	}
+	@GetMapping("/coupon/CodeAndDiscount/{couponCode}/{percentDiscount}")
+	public ResponseEntity<List<CouponDto>> findByCouponCodeOrPercentDiscount(@PathVariable("couponCode")int couponCode,@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.findByCouponCodeOrPercentDiscount(couponCode, percentDiscount), HttpStatus.OK);
+	}
+	
+	
 }

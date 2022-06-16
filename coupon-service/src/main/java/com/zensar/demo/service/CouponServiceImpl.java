@@ -10,6 +10,7 @@ import com.zensar.demo.Repository.CouponRepository;
 import com.zensar.demo.dto.CouponDto;
 import com.zensar.demo.entity.Coupon;
 
+
 @Service
 public class CouponServiceImpl implements CouponServices {
 
@@ -76,9 +77,33 @@ public class CouponServiceImpl implements CouponServices {
 	public void deleteCoupon(int couponId) {
 		couponRepository.deleteById(couponId);
 	}
+
+	@Override
+	public List<CouponDto> findByPercentDiscount(int percentDiscount) {
+		List<Coupon> listOfCoupon = couponRepository.findByPercentDiscount(percentDiscount);
+		List<CouponDto> listOfDto = new ArrayList<CouponDto>();
+		for (Coupon coupon : listOfCoupon) {
+			listOfDto.add(modelMapper.map(coupon, CouponDto.class));
+		}
+		return listOfDto;
+	}
+
+	@Override
+	public List<CouponDto> findByCouponCodeOrPercentDiscount(int couponCode, int percentDiscount) {
+		List<Coupon> listOfCoupon = couponRepository.findByCouponCodeOrPercentDiscount(couponCode, percentDiscount);
+		List<CouponDto> listOfDto = new ArrayList<CouponDto>();
+		for (Coupon coupon : listOfCoupon) {
+			listOfDto.add(modelMapper.map(coupon, CouponDto.class));
+		}
+		return listOfDto;
+	}
 	
 	
-/*
+	
+	
+	
+	
+	/*
 	public Coupon mapToentity(CouponDto couponDto) {
 
 		Coupon coupon = new Coupon();
@@ -101,7 +126,6 @@ public class CouponServiceImpl implements CouponServices {
 		return couponDto;
 	}
 */
-	
-	
-	
+
+		
 }

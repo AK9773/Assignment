@@ -15,4 +15,8 @@ public interface CouponServices {
 	public CouponDto updateCoupon(int couponId, CouponDto couponDto);
 
 	public void deleteCoupon(int couponId);
+	
+	List<CouponDto> findByPercentDiscount(int percentDiscount);
+	
+	List<CouponDto> findByCouponCodeOrPercentDiscount(int couponCode, int percentDiscount);
 }
