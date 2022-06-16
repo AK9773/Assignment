@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.demo.dto.CouponDto;
@@ -33,8 +34,10 @@ public class CouponController {
 	}
 
 	@GetMapping("/coupon")
-	public ResponseEntity<List<CouponDto>> getAllCoupon() {
-		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(), HttpStatus.OK);
+	public ResponseEntity<List<CouponDto>> getAllCoupon(
+			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(pageNumber, pageSize), HttpStatus.OK);
 
 	}
 
@@ -59,13 +62,27 @@ public class CouponController {
 
 	@GetMapping("/coupon/percentDiscount/{percentDiscount}")
 	public ResponseEntity<List<CouponDto>> findByPercentDiscount(@PathVariable("percentDiscount") int percentDiscount) {
-		return new ResponseEntity<List<CouponDto>>(couponServices.findByPercentDiscount(percentDiscount), HttpStatus.OK);
+		return new ResponseEntity<List<CouponDto>>(couponServices.findByPercentDiscount(percentDiscount),
+				HttpStatus.OK);
 
 	}
+
 	@GetMapping("/coupon/CodeAndDiscount/{couponCode}/{percentDiscount}")
-	public ResponseEntity<List<CouponDto>> findByCouponCodeOrPercentDiscount(@PathVariable("couponCode")int couponCode,@PathVariable("percentDiscount") int percentDiscount) {
-		return new ResponseEntity<List<CouponDto>>(couponServices.findByCouponCodeOrPercentDiscount(couponCode, percentDiscount), HttpStatus.OK);
+	public ResponseEntity<List<CouponDto>> findByCouponCodeOrPercentDiscount(@PathVariable("couponCode") int couponCode,
+			@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(
+				couponServices.findByCouponCodeOrPercentDiscount(couponCode, percentDiscount), HttpStatus.OK);
 	}
-	
-	
+
+	@GetMapping("/coupon/percentDiscount1/{percentDiscount}")
+	public ResponseEntity<List<CouponDto>> test(@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.test(percentDiscount), HttpStatus.OK);
+	}
+
+	@GetMapping("/coupon/CodeAndDiscount1/{couponCode}/{percentDiscount}")
+	public ResponseEntity<List<CouponDto>> test2(@PathVariable("couponCode") int couponCode,
+			@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.test2(couponCode, percentDiscount), HttpStatus.OK);
+	}
+
 }
