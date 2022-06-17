@@ -15,6 +15,5 @@ public class CouponServiceApplication {
 	@Bean
 	public ModelMapper getMapper() {
 		return new ModelMapper();
-
 	}
 }
