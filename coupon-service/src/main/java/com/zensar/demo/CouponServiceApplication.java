@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CouponServiceApplication extends SpringBootServletInitializer{
+public class CouponServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CouponServiceApplication.class, args);
@@ -17,12 +17,6 @@ public class CouponServiceApplication extends SpringBootServletInitializer{
 	@Bean
 	public ModelMapper getMapper() {
 		return new ModelMapper();
-	}
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		
-		return super.configure(builder);
 	}
 	
 	
