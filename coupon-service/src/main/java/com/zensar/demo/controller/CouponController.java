@@ -3,6 +3,7 @@ package com.zensar.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,10 @@ public class CouponController {
 	@GetMapping("/coupon")
 	public ResponseEntity<List<CouponDto>> getAllCoupon(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
-		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(pageNumber, pageSize), HttpStatus.OK);
+			@RequestParam(value = "pageSize", required = false, defaultValue = "5") int pageSize,
+			@RequestParam(value = "sortBy", required = false, defaultValue = "percentDiscount") String sortBy,
+			@RequestParam(value = "dir", required = false, defaultValue = "ASC") Direction dir) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(pageNumber, pageSize, sortBy, dir), HttpStatus.OK);
 
 	}
 
@@ -83,6 +86,12 @@ public class CouponController {
 	public ResponseEntity<List<CouponDto>> test2(@PathVariable("couponCode") int couponCode,
 			@PathVariable("percentDiscount") int percentDiscount) {
 		return new ResponseEntity<List<CouponDto>>(couponServices.test2(couponCode, percentDiscount), HttpStatus.OK);
+	}
+	
+	@GetMapping("/coupon/percentDiscount2/{percentDiscount}")
+	public ResponseEntity<List<CouponDto>> getByPercentDiscountGreaterThan(@PathVariable("percentDiscount") int percentDiscount){
+		return new ResponseEntity<List<CouponDto>>(couponServices.getByPercentDiscountGreaterThan(percentDiscount), HttpStatus.OK);
+		
 	}
 
 }

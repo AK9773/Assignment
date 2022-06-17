@@ -1,4 +1,4 @@
-package com.zensar.demo.Repository;
+package com.zensar.demo.repository;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 	List<Coupon> findByPercentDiscount(int percentDiscount);
 
 	List<Coupon> findByCouponCodeOrPercentDiscount(int couponCode, int percentDiscount);
+	
+	List<Coupon> getByPercentDiscountGreaterThan(int percentDiscount);
 
 	@Query("from Coupon c where percentDiscount=?1")
 	List<Coupon> test(int percentDiscount);
