@@ -3,10 +3,12 @@ package com.zensar.demo;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CouponServiceApplication {
+public class CouponServiceApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(CouponServiceApplication.class, args);
@@ -16,4 +18,12 @@ public class CouponServiceApplication {
 	public ModelMapper getMapper() {
 		return new ModelMapper();
 	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		
+		return super.configure(builder);
+	}
+	
+	
 }
