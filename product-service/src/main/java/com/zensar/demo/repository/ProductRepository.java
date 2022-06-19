@@ -1,20 +1,12 @@
 package com.zensar.demo.repository;
 
-import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.zensar.demo.entity.Product;
 
-public interface ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, Integer>{
 
-	public Product getProduct(int productId);
-
-	public List<Product> getAllProduct();
-
-	public void insertProduct(Product product);
-
-	public void updateProduct(int productId, Product product);
-
-	public void deleteProduct(int productId);
 	
 	
 }

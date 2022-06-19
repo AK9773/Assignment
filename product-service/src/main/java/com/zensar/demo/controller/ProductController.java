@@ -11,41 +11,38 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.zensar.demo.entity.Product;
 import com.zensar.demo.service.ProductServices;
 
 @RestController
-@RequestMapping(value = "/product-api", produces = { MediaType.APPLICATION_XML_VALUE,
-		MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
-				MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/product-api")
 public class ProductController {
 
 	@Autowired
 	private ProductServices productServices;
 
-	public ProductController() {
-		super();
-
-	}
-
-	@GetMapping("/products/{productId}")
+	@GetMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE })
 	public Product getProduct(@PathVariable("productId") int productId) {
 
 		return productServices.getProduct(productId);
 	}
 
-	@GetMapping("/products")
+	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE })
 	public List<Product> getAllProduct() {
 		return productServices.getAllProduct();
 	}
 
-	@PostMapping("/products")
+	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE })
 	public void insertProduct(@RequestBody Product product) {
 		productServices.insertProduct(product);
 	}
 
-	@PutMapping("/products/{productId}")
+	@PutMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_JSON_VALUE })
 	public void updateProduct(@PathVariable("productId") int productId, @RequestBody Product product) {
 		productServices.updateProduct(productId, product);
 
