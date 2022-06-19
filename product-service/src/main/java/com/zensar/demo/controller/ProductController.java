@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.zensar.demo.dto.ProductDto;
 import com.zensar.demo.entity.Product;
 import com.zensar.demo.service.ProductServices;
 
@@ -23,29 +25,28 @@ public class ProductController {
 
 	@GetMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE })
-	public Product getProduct(@PathVariable("productId") int productId) {
+	public ProductDto getProduct(@PathVariable("productId") int productId) {
 
 		return productServices.getProduct(productId);
 	}
 
 	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE })
-	public List<Product> getAllProduct() {
+	public List<ProductDto> getAllProduct() {
 		return productServices.getAllProduct();
 	}
 
 	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE })
-	public void insertProduct(@RequestBody Product product) {
-		productServices.insertProduct(product);
+	public ProductDto insertProduct(@RequestBody ProductDto productDto) {
+		return productServices.insertProduct(productDto);
 	}
 
 	@PutMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_VALUE })
-	public void updateProduct(@PathVariable("productId") int productId, @RequestBody Product product) {
-		productServices.updateProduct(productId, product);
-
+	public void updateProduct(@PathVariable("productId") int productId, @RequestBody ProductDto productDto) {
+		productServices.updateProduct(productId, productDto);
 	}
 
 	@DeleteMapping("/products/{productId}")
