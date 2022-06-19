@@ -1,73 +1,59 @@
 package com.zensar.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.demo.entity.Product;
+import com.zensar.demo.service.ProductServices;
 
 @RestController
-@RequestMapping("/product-api")
+@RequestMapping(value = "/product-api", produces = { MediaType.APPLICATION_XML_VALUE,
+		MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
+				MediaType.APPLICATION_JSON_VALUE })
 public class ProductController {
 
-	private List<Product> products = new ArrayList<Product>();
+	@Autowired
+	private ProductServices productServices;
 
 	public ProductController() {
 		super();
-		products.add(new Product(101, "Laptop", 50000));
-		products.add(new Product(102, "Mouse", 500));
-		products.add(new Product(103, "Fan", 1500));
+
 	}
 
-	@RequestMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.GET)
+	@GetMapping("/products/{productId}")
 	public Product getProduct(@PathVariable("productId") int productId) {
-		for (Product product : products) {
-			if (product.getProductId() == productId) {
-				return product;
-			}
-		}
-		return null;
+
+		return productServices.getProduct(productId);
 	}
 
-	@RequestMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.GET)
-	private List<Product> getAllProduct() {
-		return products;
+	@GetMapping("/products")
+	public List<Product> getAllProduct() {
+		return productServices.getAllProduct();
 	}
 
-	@RequestMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.POST)
+	@PostMapping("/products")
 	public void insertProduct(@RequestBody Product product) {
-		products.add(product);
-
+		productServices.insertProduct(product);
 	}
 
-	@RequestMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.PUT)
+	@PutMapping("/products/{productId}")
 	public void updateProduct(@PathVariable("productId") int productId, @RequestBody Product product) {
-		Product product2 = getProduct(productId);
-		product2.setProductId(product.getProductId());
-		product2.setProductName(product.getProductName());
-		product2.setProductCost(product.getProductCost());
+		productServices.updateProduct(productId, product);
 
 	}
 
-	@RequestMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.DELETE)
+	@DeleteMapping("/products/{productId}")
 	public void deleteProduct(@PathVariable("productId") int productId) {
-		for (int i = 0; i < products.size(); i++) {
-			Product product = products.get(i);
-			if (product.getProductId() == productId)
-				products.remove(product);
-		}
+		productServices.deleteProduct(productId);
 
 	}
 }
