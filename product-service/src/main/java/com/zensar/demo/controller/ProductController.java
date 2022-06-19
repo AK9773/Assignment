@@ -17,7 +17,7 @@ import com.zensar.demo.entity.Product;
 import com.zensar.demo.service.ProductServices;
 
 @RestController
-@RequestMapping(value = "/product-api")
+@RequestMapping("/product-api")
 public class ProductController {
 
 	@Autowired
@@ -30,14 +30,12 @@ public class ProductController {
 		return productServices.getProduct(productId);
 	}
 
-	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public List<ProductDto> getAllProduct() {
 		return productServices.getAllProduct();
 	}
 
-	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ProductDto insertProduct(@RequestBody ProductDto productDto) {
 		return productServices.insertProduct(productDto);
 	}
