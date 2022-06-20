@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.zensar.demo.dto.ProductDto;
 import com.zensar.demo.entity.Product;
 import com.zensar.demo.repository.ProductRepository;
@@ -19,6 +21,8 @@ public class ProductServiceImpl implements ProductServices {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	Pageable p;
 
 	@Override
 	public ProductDto getProduct(int productId) {
@@ -29,11 +33,11 @@ public class ProductServiceImpl implements ProductServices {
 	}
 
 	@Override
-	public List<ProductDto> getAllProduct() {
+	public List<ProductDto> getAllProduct(int pageNumber, int pageSize, String sortBy, Direction direction) {
 
-		List<Product> listOfProduct = productRepository.findAll();
 		List<ProductDto> listOfDto = new ArrayList<ProductDto>();
-		for (Product product : listOfProduct) {
+		Page<Product> page = productRepository.findAll(PageRequest.of(pageNumber, pageSize, direction, sortBy));
+		for (Product product : page) {
 			listOfDto.add(modelMapper.map(product, ProductDto.class));
 		}
 		return listOfDto;

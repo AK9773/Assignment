@@ -2,6 +2,7 @@ package com.zensar.demo.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.zensar.demo.dto.ProductDto;
 import com.zensar.demo.service.ProductServices;
@@ -32,8 +34,13 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/products")
-	public ResponseEntity<List<ProductDto>> getAllProduct() {
-		return new ResponseEntity<List<ProductDto>>(productServices.getAllProduct(), HttpStatus.OK);
+	public ResponseEntity<List<ProductDto>> getAllProduct(
+			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(value = "pageSize", required = false, defaultValue = "5") int pageSize,
+			@RequestParam(value = "sortBy", required = false, defaultValue = "productName") String sortBy,
+			@RequestParam(value = "direction", required = false, defaultValue = "ASC") Direction direction) {
+		return new ResponseEntity<List<ProductDto>>(
+				productServices.getAllProduct(pageNumber, pageSize, sortBy, direction), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/products")
