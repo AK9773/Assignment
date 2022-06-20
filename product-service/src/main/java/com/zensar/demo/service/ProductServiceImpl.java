@@ -135,4 +135,14 @@ public class ProductServiceImpl implements ProductServices {
 		return lsitOfDto;
 	}
 
+	@Override
+	public List<ProductDto> findByProductCostGreaterThan(int productCost) {
+		List<Product> listOfProduct = productRepository.findByProductCostGreaterThan(productCost);
+		List<ProductDto> lsitOfDto = new ArrayList<ProductDto>();
+		for (Product product : listOfProduct) {
+			lsitOfDto.add(modelMapper.map(product, ProductDto.class));
+		}
+		return lsitOfDto;
+	}
+
 }

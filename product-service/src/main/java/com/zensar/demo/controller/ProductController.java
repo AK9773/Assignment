@@ -99,4 +99,10 @@ public class ProductController {
 			@PathVariable("productCost") int productCost) {
 		return new ResponseEntity<List<ProductDto>>(productServices.test3(productName, productCost), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/products/ProductCost2/{productCost}")
+	public ResponseEntity<List<ProductDto>> findByProductCostGreaterThan(@PathVariable("productCost") int productCost){
+		return new ResponseEntity<List<ProductDto>>(productServices.findByProductCostGreaterThan(productCost), HttpStatus.OK);
+		
+	}
 }
