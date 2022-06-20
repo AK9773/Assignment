@@ -17,4 +17,18 @@ public interface ProductServices {
 
 	public void deleteProduct(int productId);
 
+	List<ProductDto> findByProductName(String productName);
+
+	List<ProductDto> findByProductCost(int productCost);
+
+	List<ProductDto> findByProductCostBetween(int productCost1, int productCost2);
+
+	List<ProductDto> test(String productName);
+
+	List<ProductDto> test2(int productCost);
+
+	List<ProductDto> test3(String productName, int productCost);
+
+	List<ProductDto> test4(String productName, int productCost);
+
 }

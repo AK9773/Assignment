@@ -17,33 +17,33 @@ import com.zensar.demo.dto.ProductDto;
 import com.zensar.demo.service.ProductServices;
 
 @RestController
-@RequestMapping("/product-api")
+@RequestMapping(value = "/product-api", produces = { MediaType.APPLICATION_XML_VALUE,
+		MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
+				MediaType.APPLICATION_JSON_VALUE })
 public class ProductController {
 
 	@Autowired
 	private ProductServices productServices;
 
-	@GetMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/products/{productId}")
 	public ResponseEntity<ProductDto> getProduct(@PathVariable("productId") int productId) {
 
-		return new ResponseEntity<ProductDto>(productServices.getProduct(productId),HttpStatus.OK);
+		return new ResponseEntity<ProductDto>(productServices.getProduct(productId), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/products", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/products")
 	public ResponseEntity<List<ProductDto>> getAllProduct() {
 		return new ResponseEntity<List<ProductDto>>(productServices.getAllProduct(), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/products", consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
-		return new ResponseEntity<ProductDto>(productServices.insertProduct(productDto),HttpStatus.CREATED);
+		return new ResponseEntity<ProductDto>(productServices.insertProduct(productDto), HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/products/{productId}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<String> updateProduct(@PathVariable("productId") int productId, @RequestBody ProductDto productDto) {
+	@PutMapping(value = "/products/{productId}")
+	public ResponseEntity<String> updateProduct(@PathVariable("productId") int productId,
+			@RequestBody ProductDto productDto) {
 		productServices.updateProduct(productId, productDto);
 		return new ResponseEntity<String>("Product Updated Successfully", HttpStatus.OK);
 	}
@@ -52,6 +52,44 @@ public class ProductController {
 	public ResponseEntity<String> deleteProduct(@PathVariable("productId") int productId) {
 		productServices.deleteProduct(productId);
 		return new ResponseEntity<String>("Product Deleted Successfully", HttpStatus.OK);
+	}
 
+	@GetMapping(value = "/products/ProductName/{productName}")
+	public ResponseEntity<List<ProductDto>> findByProductName(@PathVariable("productName") String productName) {
+		return new ResponseEntity<List<ProductDto>>(productServices.findByProductName(productName), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/ProductCost/{productCost}")
+	public ResponseEntity<List<ProductDto>> findByProductCost(@PathVariable int productCost) {
+		return new ResponseEntity<List<ProductDto>>(productServices.findByProductCost(productCost), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/ProductCost/{productCost1}/{productCost2}")
+	public ResponseEntity<List<ProductDto>> findByProductCostBetween(@PathVariable("productCost1") int productCost1,
+			@PathVariable("productCost2") int productCost2) {
+		return new ResponseEntity<List<ProductDto>>(
+				productServices.findByProductCostBetween(productCost1, productCost2), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/test/ProductName/{productName}")
+	public ResponseEntity<List<ProductDto>> test(@PathVariable("productName") String productName) {
+		return new ResponseEntity<List<ProductDto>>(productServices.test(productName), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/test2/ProductCost/{productCost}")
+	public ResponseEntity<List<ProductDto>> test2(@PathVariable("productCost") int productCost) {
+		return new ResponseEntity<List<ProductDto>>(productServices.test2(productCost), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/test3/ProductNameCost/{productName}/{productCost}")
+	public ResponseEntity<List<ProductDto>> test3(@PathVariable("productName") String productName,
+			@PathVariable("productCost") int productCost) {
+		return new ResponseEntity<List<ProductDto>>(productServices.test3(productName, productCost), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/products/test4/ProductNameCost/{productName}/{productCost}")
+	public ResponseEntity<List<ProductDto>> test4(@PathVariable("productName") String productName,
+			@PathVariable("productCost") int productCost) {
+		return new ResponseEntity<List<ProductDto>>(productServices.test3(productName, productCost), HttpStatus.OK);
 	}
 }
