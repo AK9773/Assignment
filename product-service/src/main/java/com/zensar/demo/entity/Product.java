@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
 @Entity
 @NamedQueries(value = { @NamedQuery(name = "Product.test", query = "from Product p where p.productName=?1"),
@@ -16,6 +17,9 @@ public class Product {
 	private int productId;
 	private String productName;
 	private int productCost;
+	
+	@Transient
+	private int couponCode;
 
 	public Product() {
 		super();
@@ -26,6 +30,16 @@ public class Product {
 		this.productId = productId;
 		this.productName = productName;
 		this.productCost = productCost;
+	}
+	
+	
+
+	public Product(int productId, String productName, int productCost, int couponCode) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productCost = productCost;
+		this.couponCode = couponCode;
 	}
 
 	public int getProductId() {
@@ -52,10 +66,21 @@ public class Product {
 		this.productCost = productCost;
 	}
 
+	
+	public int getCouponCode() {
+		return couponCode;
+	}
+
+	public void setCouponCode(int couponCode) {
+		this.couponCode = couponCode;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", productCost=" + productCost
-				+ "]";
+				+ ", couponCode=" + couponCode + "]";
 	}
+
+	
 
 }

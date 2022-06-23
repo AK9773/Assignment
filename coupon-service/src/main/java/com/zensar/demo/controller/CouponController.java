@@ -48,7 +48,8 @@ public class CouponController {
 			@RequestParam(value = "pageSize", required = false, defaultValue = "5") int pageSize,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "percentDiscount") String sortBy,
 			@RequestParam(value = "dir", required = false, defaultValue = "ASC") Direction dir) {
-		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(pageNumber, pageSize, sortBy, dir), HttpStatus.OK);
+		return new ResponseEntity<List<CouponDto>>(couponServices.getAllCoupon(pageNumber, pageSize, sortBy, dir),
+				HttpStatus.OK);
 
 	}
 
@@ -100,12 +101,18 @@ public class CouponController {
 			@PathVariable("percentDiscount") int percentDiscount) {
 		return new ResponseEntity<List<CouponDto>>(couponServices.test2(couponCode, percentDiscount), HttpStatus.OK);
 	}
-	
+
 	@Operation(summary = "Find all Coupon having percentDiscount greater than given percentDiscount")
 	@GetMapping("/coupon/percentDiscount2/{percentDiscount}")
-	public ResponseEntity<List<CouponDto>> getByPercentDiscountGreaterThan(@PathVariable("percentDiscount") int percentDiscount){
-		return new ResponseEntity<List<CouponDto>>(couponServices.getByPercentDiscountGreaterThan(percentDiscount), HttpStatus.OK);
-		
+	public ResponseEntity<List<CouponDto>> getByPercentDiscountGreaterThan(
+			@PathVariable("percentDiscount") int percentDiscount) {
+		return new ResponseEntity<List<CouponDto>>(couponServices.getByPercentDiscountGreaterThan(percentDiscount),
+				HttpStatus.OK);
+	}
+
+	@GetMapping("/coupon/couponCode/{couponCode}")
+	public ResponseEntity<CouponDto> findByCouponCode(@PathVariable("couponCode")int couponCode) {
+		return new ResponseEntity<CouponDto>(couponServices.findByCouponCode(couponCode), HttpStatus.OK);
 	}
 
 }

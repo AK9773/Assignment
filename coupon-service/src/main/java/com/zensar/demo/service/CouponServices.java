@@ -27,4 +27,8 @@ public interface CouponServices {
 	List<CouponDto> test2(int couponCode, int percentDiscount);
 	
 	List<CouponDto> getByPercentDiscountGreaterThan(int percentDiscount);
+	
+	CouponDto findByCouponCode(int couponCode);
+	
+	
 }

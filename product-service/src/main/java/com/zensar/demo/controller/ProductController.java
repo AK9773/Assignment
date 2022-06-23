@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.zensar.demo.dto.CouponDto;
 import com.zensar.demo.dto.ProductDto;
 import com.zensar.demo.service.ProductServices;
 
@@ -30,6 +33,9 @@ public class ProductController {
 	@Autowired
 	private ProductServices productServices;
 
+	@Autowired
+	private RestTemplate restTemplate;
+
 	@Operation(summary = "Product data fetched from DataBase")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Data fatched successfully", content = {
@@ -41,7 +47,6 @@ public class ProductController {
 		return new ResponseEntity<ProductDto>(productServices.getProduct(productId), HttpStatus.OK);
 	}
 
-	
 	@Operation(summary = "Product data fetched from DataBase")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Data fatched successfully", content = {
 			@Content(mediaType = "application/json"), @Content(mediaType = "application/xml") }) })
@@ -58,6 +63,10 @@ public class ProductController {
 	@Operation(summary = "Insert Product")
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
+		ResponseEntity<CouponDto> responseEntity = restTemplate.getForEntity("http://localhost:1234/coupon-api/coupon/couponCode/" + productDto.getCouponCode(),
+				CouponDto.class);
+		int percentDiscount = responseEntity.getBody().getPercentDiscount();
+		productDto.setProductCost(productDto.getProductCost()*(100-percentDiscount)/100);
 		return new ResponseEntity<ProductDto>(productServices.insertProduct(productDto), HttpStatus.CREATED);
 	}
 
@@ -115,7 +124,6 @@ public class ProductController {
 		return new ResponseEntity<List<ProductDto>>(productServices.test3(productName, productCost), HttpStatus.OK);
 	}
 
-	
 	@Operation(summary = "Find Product by name and cost")
 	@GetMapping(value = "/products/test4/ProductNameCost/{productName}/{productCost}")
 	public ResponseEntity<List<ProductDto>> test4(@PathVariable("productName") String productName,
