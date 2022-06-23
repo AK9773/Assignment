@@ -12,3 +12,31 @@ spring:
    properties:
     hibernate:
      format_sql: true
+
+     
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+      base-path: /myActuator
+
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+      
+  info:
+    build:
+      enabled: true
+    git:
+      enabled: true
+    env:
+      enabled: true
+      
+info:
+ createdBy: Aman Kumar
+ modified: 23-06-2022
+     
