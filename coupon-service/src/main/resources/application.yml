@@ -35,8 +35,5 @@ management:
       enabled: true
     env:
       enabled: true
-      
-info:
- createdBy: Aman Kumar
- modified: 23-06-2022
+
      
