@@ -63,10 +63,14 @@ public class ProductController {
 	@Operation(summary = "Insert Product")
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
-		ResponseEntity<CouponDto> responseEntity = restTemplate.getForEntity("http://localhost:1234/coupon-api/coupon/couponCode/" + productDto.getCouponCode(),
-				CouponDto.class);
+		ResponseEntity<CouponDto> responseEntity = restTemplate.getForEntity(
+				"http://localhost:1234/coupon-api/coupon/couponCode/" + productDto.getCouponCode(), CouponDto.class);
 		int percentDiscount = responseEntity.getBody().getPercentDiscount();
-		productDto.setProductCost(productDto.getProductCost()*(100-percentDiscount)/100);
+		productDto.setProductCost(productDto.getProductCost() * (100 - percentDiscount) / 100);
+		int couponId = responseEntity.getBody().getCouponId();
+		
+		restTemplate.delete("http://localhost:1234/coupon-api/coupon/" + couponId);
+		
 		return new ResponseEntity<ProductDto>(productServices.insertProduct(productDto), HttpStatus.CREATED);
 	}
 
