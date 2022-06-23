@@ -25,4 +25,27 @@ spring:
     hibernate:
      format_sql: true
     
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        exclude: health
+      base-path: /myActuator
+
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+      
+  info:
+    build:
+      enabled: true
+    git:
+      enabled: true
+    env:
+      enabled: true
+
    
