@@ -20,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import com.google.inject.spi.Message;
 import com.zensar.demo.dto.CouponDto;
 import com.zensar.demo.dto.ProductDto;
+import com.zensar.demo.entity.Coupon;
+import com.zensar.demo.restclient.CouponRestClient;
 import com.zensar.demo.service.ProductServices;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,9 +36,13 @@ public class ProductController {
 	@Autowired
 	private ProductServices productServices;
 
-	@Autowired
-	private RestTemplate restTemplate;
+	/*
+	 * @Autowired private RestTemplate restTemplate;
+	 */
 
+	@Autowired
+	public CouponRestClient couponRestClient;
+	
 	@Operation(summary = "Product data fetched from DataBase")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Data fatched successfully", content = {
@@ -64,15 +70,20 @@ public class ProductController {
 	@Operation(summary = "Insert Product")
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
-		try{ResponseEntity<CouponDto> responseEntity = restTemplate.getForEntity( "http://COUPON-SERVICE/coupon-api/coupon/couponCode/" + productDto.getCouponCode(), CouponDto.class);
-		int percentDiscount = responseEntity.getBody().getPercentDiscount();
-		productDto.setProductCost(productDto.getProductCost() * (100 - percentDiscount) / 100);}
-		catch(Exception exception) {
+		try {
+			//ResponseEntity<CouponDto> responseEntity = restTemplate.getForEntity( "http://COUPON-SERVICE/coupon-api/coupon/couponCode/" + productDto.getCouponCode(), CouponDto.class);
+			//int percentDiscount = responseEntity.getBody().getPercentDiscount();
+			
+			Coupon coupon = couponRestClient.getCoupon(productDto.getCouponCode());
+			int percentDiscount = coupon.getPercentDiscount();
+			
+			productDto.setProductCost(productDto.getProductCost() * (100 - percentDiscount) / 100);
+		} catch (Exception exception) {
 			System.out.println(exception.getMessage());
 		}
-		
-		//int couponId = responseEntity.getBody().getCouponId();
-		//restTemplate.delete("http://COUPON-SERVICE/coupon-api/coupon/" + couponId);
+
+		// int couponId = responseEntity.getBody().getCouponId();
+		// restTemplate.delete("http://COUPON-SERVICE/coupon-api/coupon/" + couponId);
 
 		return new ResponseEntity<ProductDto>(productServices.insertProduct(productDto), HttpStatus.CREATED);
 	}
