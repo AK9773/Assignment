@@ -41,7 +41,8 @@ management:
 
 eureka:
   client:
-    register-with-eureka: false
+    register-with-eureka: true
     fetch-registry: true
 
-         
+  instance:
+    prefer-ip-address: true
