@@ -30,8 +30,7 @@ management:
   endpoint:
     shutdown:
       enabled: true
-    health:
-      show-details: always
+    
       
   info:
     build:
