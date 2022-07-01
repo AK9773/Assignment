@@ -19,6 +19,7 @@ public class SpringBootDemo3Application extends SpringBootServletInitializer{
 		System.out.println("Ram");
 		SpringApplication.run(SpringBootDemo3Application.class, args);
 		System.out.println("Laxman");
+		System.out.println("Aman");
 	}
 
 
@@ -38,7 +39,6 @@ public class SpringBootDemo3Application extends SpringBootServletInitializer{
 		// TODO Auto-generated method stub
 		return super.configure(builder);
 	}
-	
 	
 		
 }
