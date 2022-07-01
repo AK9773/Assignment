@@ -25,7 +25,7 @@ public class HomeController {
 	
 	@GetMapping("/registeration")
 	public String registeration() {
-		return "This is Registration page";
+		return "This is Registration page, register here";
 	}
 
 }
