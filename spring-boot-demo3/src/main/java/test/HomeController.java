@@ -20,7 +20,7 @@ public class HomeController {
 	
 	@GetMapping("/register")
 	public String register() {
-		return "This is Register page";
+		return "This is Registration page";
 	}
 
 }
