@@ -13,7 +13,7 @@ import org.springframework.core.annotation.Order;
 @SpringBootApplication
 @ComponentScan(basePackages = {"test","com.zensar"})
 @Order(2)
-public class SpringBootDemo3Application{
+public class SpringBootDemo3Application extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		System.out.println("Ram");
@@ -29,5 +29,16 @@ public class SpringBootDemo3Application{
 		return new ModelMapper();
 		
 	}
+
+
+
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		// TODO Auto-generated method stub
+		return super.configure(builder);
+	}
+	
+	
 		
 }
