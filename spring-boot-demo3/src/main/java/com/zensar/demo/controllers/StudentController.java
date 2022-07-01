@@ -53,7 +53,6 @@ public class StudentController {
 
 	// @RequestMapping(value = "/students", method = RequestMethod.POST)
 	@PostMapping(value = "/students")
-	//@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<StudentDto> insertStudents(@RequestBody StudentDto studentDto) {
 		return new ResponseEntity<StudentDto>(studentServices.insertStudents(studentDto), HttpStatus.OK);
 	}
