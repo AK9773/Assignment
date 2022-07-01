@@ -22,5 +22,10 @@ public class HomeController {
 	public String register() {
 		return "This is Registration page";
 	}
+	
+	@GetMapping("/registeration")
+	public String registeration() {
+		return "This is Registration page";
+	}
 
 }
