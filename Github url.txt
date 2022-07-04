@@ -1,0 +1,2 @@
+Git Repository url in which spring-boot-demo project is pushed for Pipeline Project
+url: https://github.com/AK9773/spring-boot-demo2.git
